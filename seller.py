@@ -12,7 +12,15 @@ logger = logging.getLogger(__file__)
 
 
 def get_product_list(last_id, client_id, seller_token):
-    """Получить список товаров магазина озон"""
+    """Создаёт список с товарами, взятый с маркетплейса
+
+    Аргументы:
+        last_id: str
+        client_id: ключ
+        seller_token: ключ
+
+    Возвращает:
+        список с товарами: dict"""
     url = "https://api-seller.ozon.ru/v2/product/list"
     headers = {
         "Client-Id": client_id,
@@ -32,7 +40,14 @@ def get_product_list(last_id, client_id, seller_token):
 
 
 def get_offer_ids(client_id, seller_token):
-    """Получить артикулы товаров магазина озон"""
+    """Создаёт список с id
+
+    Аргументы:
+        client_id: ключ
+        seller_token: ключ
+
+    Возвращает:
+        список с id: list"""
     last_id = ""
     product_list = []
     while True:
@@ -49,7 +64,15 @@ def get_offer_ids(client_id, seller_token):
 
 
 def update_price(prices: list, client_id, seller_token):
-    """Обновить цены товаров"""
+    """Обновляет ппрайс лист на маркетплейсе
+
+    Аргументы:
+        prices: list
+        client_id: ключ
+        seller_token: ключ
+
+    Возвращает:
+        Отаправляет json файл на сайт"""
     url = "https://api-seller.ozon.ru/v1/product/import/prices"
     headers = {
         "Client-Id": client_id,
@@ -62,7 +85,15 @@ def update_price(prices: list, client_id, seller_token):
 
 
 def update_stocks(stocks: list, client_id, seller_token):
-    """Обновить остатки"""
+    """Обновляет остатки товара на маркетплейсе
+
+    Аргументы:
+        stocks: list
+        client_id: ключ
+        seller_token: ключ
+
+    Возвращает:
+        Отаправляет json файл на сайт"""
     url = "https://api-seller.ozon.ru/v1/product/import/stocks"
     headers = {
         "Client-Id": client_id,
@@ -75,7 +106,12 @@ def update_stocks(stocks: list, client_id, seller_token):
 
 
 def download_stock():
-    """Скачать файл ostatki с сайта casio"""
+    """Скачивается архив в котором эксель файл
+        эксель файл считывается, данные записываются в список
+        после обработки, эксель файл удаляется
+
+    Возвращает:
+        Список часов и данные по ним: list"""
     # Скачать остатки с сайта
     casio_url = "https://timeworld.ru/upload/files/ostatki.zip"
     session = requests.Session()
@@ -96,6 +132,14 @@ def download_stock():
 
 
 def create_stocks(watch_remnants, offer_ids):
+    """Создаёт список с id товара и остатками
+
+    Аргументы:
+        watch_remnants: list (список с часами)
+        offer_ids: list (список с id товаров)
+
+    Возвращает:
+        Список с id товара и остатками: list"""
     # Уберем то, что не загружено в seller
     stocks = []
     for watch in watch_remnants:
@@ -116,6 +160,15 @@ def create_stocks(watch_remnants, offer_ids):
 
 
 def create_prices(watch_remnants, offer_ids):
+    """Создаётся прайслист по часам
+
+    Аргументы:
+        watch_remnants: list (список с часами и данные по ним)
+        offer_ids: list (список с id товаров)
+
+    Возвращает:
+        Обновлённый прайслист по часам: list"""
+
     prices = []
     for watch in watch_remnants:
         if str(watch.get("Код")) in offer_ids:
@@ -131,12 +184,29 @@ def create_prices(watch_remnants, offer_ids):
 
 
 def price_conversion(price: str) -> str:
-    """Преобразовать цену. Пример: 5'990.00 руб. -> 5990"""
+    """Преобразовывает цену в необходимый стандарт
+        Аргументы:
+            price: str
+        Возвращает:
+            str
+        Пример:
+            5'990.00 руб. -> 5990"""
     return re.sub("[^0-9]", "", price.split(".")[0])
 
 
 def divide(lst: list, n: int):
-    """Разделить список lst на части по n элементов"""
+    """Делит список по количеству элементов
+
+    Аргументы:
+        lst: list (список, который необходио разделить)
+        n: int (число, максимальное количество элементов в списке)
+
+    Возвращает:
+        Подсписок из элементов исходного списка длиной до `n`
+
+    Пример:
+        list(divide([1, 2, 3, 4, 5], 2))
+        [[1, 2], [3, 4], [5]]"""
     for i in range(0, len(lst), n):
         yield lst[i : i + n]
 
@@ -159,6 +229,9 @@ async def upload_stocks(watch_remnants, client_id, seller_token):
 
 
 def main():
+    """Главная функция
+    Здесь происходят основные вызовы функций
+    """
     env = Env()
     seller_token = env.str("SELLER_TOKEN")
     client_id = env.str("CLIENT_ID")
