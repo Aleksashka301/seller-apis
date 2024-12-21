@@ -19,7 +19,7 @@ def get_product_list(page, campaign_id, access_token):
             access_token: ключ от маркетплейса
 
         Возвращает:
-            Словарь с товарами и данными о них
+            dict Словарь с товарами и данными о них
     """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
@@ -97,7 +97,7 @@ def get_offer_ids(campaign_id, market_token):
             market_token: ключ от маркетплейса
 
         Возвращает:
-            список с артикулами товаров"""
+            list список с артикулами товаров"""
     page = ""
     product_list = []
     while True:
@@ -170,11 +170,11 @@ def create_prices(watch_remnants, offer_ids):
     """Создаёт прайслист с часами
 
     Аргументы:
-        watch_remnants list: списко с данными о часах
-        offer_ids list: списко с артикулами
+        watch_remnants list: спискок с данными о часах
+        offer_ids list: спискок с артикулами
 
     Возвращает:
-        list списко с артикулами и ценами на товар"""
+        list спискок с артикулами и ценами на товар"""
     prices = []
     for watch in watch_remnants:
         if str(watch.get("Код")) in offer_ids:
