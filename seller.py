@@ -15,12 +15,12 @@ def get_product_list(last_id, client_id, seller_token):
     """Создаёт список с товарами, взятый с маркетплейса
 
     Аргументы:
-        last_id: str
-        client_id: ключ
-        seller_token: ключ
+        last_id str: словарь с ключём last_id
+        client_id: ключ клиента от marketplace
+        seller_token: ключ продавца от marketplace
 
     Возвращает:
-        список с товарами: dict"""
+        dict: список с товарами"""
     url = "https://api-seller.ozon.ru/v2/product/list"
     headers = {
         "Client-Id": client_id,
@@ -43,11 +43,11 @@ def get_offer_ids(client_id, seller_token):
     """Создаёт список с id
 
     Аргументы:
-        client_id: ключ
-        seller_token: ключ
+        client_id: ключ клиента от marketplace
+        seller_token: ключ продавца от marketplace
 
     Возвращает:
-        список с id: list"""
+        list: список с id"""
     last_id = ""
     product_list = []
     while True:
@@ -67,9 +67,9 @@ def update_price(prices: list, client_id, seller_token):
     """Обновляет ппрайс лист на маркетплейсе
 
     Аргументы:
-        prices: list
-        client_id: ключ
-        seller_token: ключ
+        prices list: списко с часами и id
+        client_id: ключ клиента от marketplace
+        seller_token: ключ продавца от marketplace
 
     Возвращает:
         Отаправляет json файл на сайт"""
@@ -88,9 +88,9 @@ def update_stocks(stocks: list, client_id, seller_token):
     """Обновляет остатки товара на маркетплейсе
 
     Аргументы:
-        stocks: list
-        client_id: ключ
-        seller_token: ключ
+        stocks: списко с часами и id
+        client_id: ключ клиента от marketplace
+        seller_token: ключ продавца от marketplace
 
     Возвращает:
         Отаправляет json файл на сайт"""
@@ -135,7 +135,7 @@ def create_stocks(watch_remnants, offer_ids):
     """Создаёт список с id товара и остатками
 
     Аргументы:
-        watch_remnants: list (список с часами)
+        watch_remnants: dict (список с часами)
         offer_ids: list (список с id товаров)
 
     Возвращает:
@@ -163,7 +163,7 @@ def create_prices(watch_remnants, offer_ids):
     """Создаётся прайслист по часам
 
     Аргументы:
-        watch_remnants: list (список с часами и данные по ним)
+        watch_remnants: dict (список с часами и данные по ним)
         offer_ids: list (список с id товаров)
 
     Возвращает:
@@ -185,10 +185,11 @@ def create_prices(watch_remnants, offer_ids):
 
 def price_conversion(price: str) -> str:
     """Преобразовывает цену в необходимый стандарт
+
         Аргументы:
-            price: str
+            price str: цена
         Возвращает:
-            str
+            str: цена в изменённом виде
         Пример:
             5'990.00 руб. -> 5990"""
     return re.sub("[^0-9]", "", price.split(".")[0])
