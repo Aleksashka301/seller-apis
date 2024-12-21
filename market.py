@@ -11,6 +11,16 @@ logger = logging.getLogger(__file__)
 
 
 def get_product_list(page, campaign_id, access_token):
+    """Создаёт список товаров с yandex market
+
+        Аргументы:
+            page str: токен страницы
+            campaign_id: ключ компании для FBS продаж
+            access_token: ключ от маркетплейса
+
+        Возвращает:
+            Словарь с товарами и данными о них
+    """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
         "Content-Type": "application/json",
@@ -30,6 +40,15 @@ def get_product_list(page, campaign_id, access_token):
 
 
 def update_stocks(stocks, campaign_id, access_token):
+    """Отправляет актальные данные на yandex market
+
+    Аргументы:
+        stocks list: спискок с данными о товарах
+        campaign_id: ключ для fbs продаж
+        access_token: ключ api yandex marketplace
+
+    Возвращает:
+        объект в формате json()"""
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
         "Content-Type": "application/json",
@@ -46,6 +65,15 @@ def update_stocks(stocks, campaign_id, access_token):
 
 
 def update_price(prices, campaign_id, access_token):
+    """Обновляет цены на маркетплейсе
+
+    Аргументы:
+        prices list: спискок с артикулами и ценами на товар
+        campaign_id: ключ для FBS продаж
+        access_token: ключ для доступа в marketplace
+
+    Возвращает:
+        Объект формата json()"""
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
         "Content-Type": "application/json",
@@ -62,7 +90,14 @@ def update_price(prices, campaign_id, access_token):
 
 
 def get_offer_ids(campaign_id, market_token):
-    """Получить артикулы товаров Яндекс маркета"""
+    """Создаёт спискок с артикулами товаров
+
+        Аргументы:
+            campaign_id: ключ компании для FBS продаж
+            market_token: ключ от маркетплейса
+
+        Возвращает:
+            список с артикулами товаров"""
     page = ""
     product_list = []
     while True:
@@ -78,6 +113,15 @@ def get_offer_ids(campaign_id, market_token):
 
 
 def create_stocks(watch_remnants, offer_ids, warehouse_id):
+    """Создаёт спискок с остатками товаров для отправки на yandex market
+
+    Аргументы:
+        watch_remnants list: спискок с часами и данными о них
+        offer_ids list: спискок с артикулами товаров с yandex market
+        warehouse_id: ключ для FBS продаж
+
+    Возвращает:
+        list актуальные данные для выгрузки на yandex market"""
     # Уберем то, что не загружено в market
     stocks = list()
     date = str(datetime.datetime.utcnow().replace(microsecond=0).isoformat() + "Z")
@@ -123,6 +167,14 @@ def create_stocks(watch_remnants, offer_ids, warehouse_id):
 
 
 def create_prices(watch_remnants, offer_ids):
+    """Создаёт прайслист с часами
+
+    Аргументы:
+        watch_remnants list: списко с данными о часах
+        offer_ids list: списко с артикулами
+
+    Возвращает:
+        list списко с артикулами и ценами на товар"""
     prices = []
     for watch in watch_remnants:
         if str(watch.get("Код")) in offer_ids:
@@ -162,6 +214,9 @@ async def upload_stocks(watch_remnants, campaign_id, market_token, warehouse_id)
 
 
 def main():
+    """Основная функция
+        Определяет основные переменные
+        вызывает все основные функции"""
     env = Env()
     market_token = env.str("MARKET_TOKEN")
     campaign_fbs_id = env.str("FBS_ID")
