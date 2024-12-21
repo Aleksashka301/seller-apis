@@ -15,12 +15,13 @@ def get_product_list(last_id, client_id, seller_token):
     """Создаёт список с товарами, взятый с маркетплейса
 
     Аргументы:
-        last_id str: словарь с ключём last_id
-        client_id: ключ клиента от marketplace
-        seller_token: ключ продавца от marketplace
+        last_id (str): элемент словаря с ключём last_id
+        client_id (API): ключ клиента от marketplace
+        seller_token (API): ключ продавца от marketplace
 
     Возвращает:
-        dict: список с товарами"""
+        dict: список с товарами
+    """
     url = "https://api-seller.ozon.ru/v2/product/list"
     headers = {
         "Client-Id": client_id,
@@ -43,11 +44,12 @@ def get_offer_ids(client_id, seller_token):
     """Создаёт список с id
 
     Аргументы:
-        client_id: ключ клиента от marketplace
-        seller_token: ключ продавца от marketplace
+        client_id (API): ключ клиента от marketplace
+        seller_token (API): ключ продавца от marketplace
 
     Возвращает:
-        list: список с id"""
+        list: список с id
+    """
     last_id = ""
     product_list = []
     while True:
@@ -67,12 +69,13 @@ def update_price(prices: list, client_id, seller_token):
     """Обновляет ппрайс лист на маркетплейсе
 
     Аргументы:
-        prices list: списко с часами и id
-        client_id: ключ клиента от marketplace
-        seller_token: ключ продавца от marketplace
+        prices (list): спискок с часами и id
+        client_id (API): ключ клиента от marketplace
+        seller_token (API): ключ продавца от marketplace
 
     Возвращает:
-        Отаправляет json файл на сайт"""
+        Отаправляет json файл на сайт
+    """
     url = "https://api-seller.ozon.ru/v1/product/import/prices"
     headers = {
         "Client-Id": client_id,
@@ -88,12 +91,13 @@ def update_stocks(stocks: list, client_id, seller_token):
     """Обновляет остатки товара на маркетплейсе
 
     Аргументы:
-        stocks: списко с часами и id
-        client_id: ключ клиента от marketplace
-        seller_token: ключ продавца от marketplace
+        stocks (list): спискок с часами и id
+        client_id (API): ключ клиента от marketplace
+        seller_token (API): ключ продавца от marketplace
 
     Возвращает:
-        Отаправляет json файл на сайт"""
+        Отаправляет json файл на сайт
+    """
     url = "https://api-seller.ozon.ru/v1/product/import/stocks"
     headers = {
         "Client-Id": client_id,
@@ -111,7 +115,8 @@ def download_stock():
         после обработки, эксель файл удаляется
 
     Возвращает:
-        Список часов и данные по ним: list"""
+        list: список часов и данные по ним
+    """
     # Скачать остатки с сайта
     casio_url = "https://timeworld.ru/upload/files/ostatki.zip"
     session = requests.Session()
@@ -135,11 +140,12 @@ def create_stocks(watch_remnants, offer_ids):
     """Создаёт список с id товара и остатками
 
     Аргументы:
-        watch_remnants: dict (список с часами)
-        offer_ids: list (список с id товаров)
+        watch_remnants (dict): данные по часам
+        offer_ids (list): список с id товаров
 
     Возвращает:
-        Список с id товара и остатками: list"""
+        list: список с id товара и остатками
+    """
     # Уберем то, что не загружено в seller
     stocks = []
     for watch in watch_remnants:
@@ -163,11 +169,12 @@ def create_prices(watch_remnants, offer_ids):
     """Создаётся прайслист по часам
 
     Аргументы:
-        watch_remnants: dict (список с часами и данные по ним)
-        offer_ids: list (список с id товаров)
+        watch_remnants (dict): список с часами и данные по ним
+        offer_ids (list): список с id товаров
 
     Возвращает:
-        Обновлённый прайслист по часам: list"""
+        list: обновлённый прайслист по часам
+    """
 
     prices = []
     for watch in watch_remnants:
@@ -187,11 +194,14 @@ def price_conversion(price: str) -> str:
     """Преобразовывает цену в необходимый стандарт
 
         Аргументы:
-            price str: цена
+            price (str): цена
+
         Возвращает:
             str: цена в изменённом виде
+
         Пример:
-            5'990.00 руб. -> 5990"""
+            5'990.00 руб. -> 5990
+        """
     return re.sub("[^0-9]", "", price.split(".")[0])
 
 
@@ -199,15 +209,16 @@ def divide(lst: list, n: int):
     """Делит список по количеству элементов
 
     Аргументы:
-        lst: list (список, который необходио разделить)
-        n: int (число, максимальное количество элементов в списке)
+        lst (list): список, который необходио разделить
+        n (int): число, максимальное количество элементов в списке
 
     Возвращает:
-        Подсписок из элементов исходного списка длиной до `n`
+        list: подсписок из элементов исходного списка длиной до `n`
 
     Пример:
         list(divide([1, 2, 3, 4, 5], 2))
-        [[1, 2], [3, 4], [5]]"""
+        [[1, 2], [3, 4], [5]]
+    """
     for i in range(0, len(lst), n):
         yield lst[i : i + n]
 
