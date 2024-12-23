@@ -15,8 +15,8 @@ def get_product_list(page, campaign_id, access_token):
 
     Аргументы:
         page (str): токен страницы
-        campaign_id (API): ключ компании для FBS продаж
-        access_token (API): ключ от маркетплейса
+        campaign_id (str): ключ компании для FBS продаж
+        access_token (str): ключ от маркетплейса
 
     Возвращает:
         dict: Словарь с товарами и данными о них
@@ -40,15 +40,17 @@ def get_product_list(page, campaign_id, access_token):
 
 
 def update_stocks(stocks, campaign_id, access_token):
-    """Отправляет актальные данные на yandex market
+    """Отправляет актуальные данные на yandex market
 
     Аргументы:
-        stocks (list): спискок с данными о товарах
-        campaign_id (API): ключ для fbs продаж
-        access_token (API): ключ api yandex marketplace
+        stocks (list): список с данными о товарах
+        campaign_id (str): ключ для fbs продаж
+        access_token (str): ключ api yandex marketplace
 
     Возвращает:
         объект в формате json()
+        объект имеет тип dict и содержит ответ от yandex api
+        в ответе содержаться данные о том как прошёл запрос на обновление товаров
     """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
@@ -70,11 +72,13 @@ def update_price(prices, campaign_id, access_token):
 
     Аргументы:
         prices (list): спискок с артикулами и ценами на товар
-        campaign_id (API): ключ для FBS продаж
-        access_token (API): ключ для доступа в marketplace
+        campaign_id (str): ключ для FBS продаж
+        access_token (str): ключ для доступа в marketplace
 
     Возвращает:
-        Объект формата json()
+        объект в формате json()
+        объект имеет тип dict и содержит ответ от yandex api
+        в ответе содержаться данные о том как прошёл запрос на обновление цен товаров
     """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
@@ -95,8 +99,8 @@ def get_offer_ids(campaign_id, market_token):
     """Создаёт спискок с артикулами товаров
 
     Аргументы:
-        campaign_id (API): ключ компании для FBS продаж
-        market_token (API): ключ от маркетплейса
+        campaign_id (str): ключ компании для FBS продаж
+        market_token (str): ключ от маркетплейса
 
     Возвращает:
         list: список с артикулами товаров
@@ -121,7 +125,7 @@ def create_stocks(watch_remnants, offer_ids, warehouse_id):
     Аргументы:
         watch_remnants (list): спискок с часами и данными о них
         offer_ids (list): спискок с артикулами товаров с yandex market
-        warehouse_id (API): ключ для FBS продаж
+        warehouse_id (str): ключ для FBS продаж
 
     Возвращает:
         list: актуальные данные для выгрузки на yandex market
