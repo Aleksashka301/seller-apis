@@ -16,8 +16,8 @@ def get_product_list(last_id, client_id, seller_token):
 
     Аргументы:
         last_id (str): элемент словаря с ключём last_id
-        client_id (API): ключ клиента от marketplace
-        seller_token (API): ключ продавца от marketplace
+        client_id (str): ключ клиента от marketplace
+        seller_token (str): ключ продавца от marketplace
 
     Возвращает:
         dict: список с товарами
@@ -44,8 +44,8 @@ def get_offer_ids(client_id, seller_token):
     """Создаёт список с id
 
     Аргументы:
-        client_id (API): ключ клиента от marketplace
-        seller_token (API): ключ продавца от marketplace
+        client_id (str): ключ клиента от marketplace
+        seller_token (str): ключ продавца от marketplace
 
     Возвращает:
         list: список с id
@@ -70,11 +70,14 @@ def update_price(prices: list, client_id, seller_token):
 
     Аргументы:
         prices (list): спискок с часами и id
-        client_id (API): ключ клиента от marketplace
-        seller_token (API): ключ продавца от marketplace
+        client_id (str): ключ клиента от marketplace
+        seller_token (str): ключ продавца от marketplace
 
     Возвращает:
-        Отаправляет json файл на сайт
+        объект в формате json()
+        объект имеет тип dict
+        содержит в себе ответ от сервиса ozon api
+        в ответе данные о том как прошло обновление цен на маркетплейсе
     """
     url = "https://api-seller.ozon.ru/v1/product/import/prices"
     headers = {
@@ -92,11 +95,14 @@ def update_stocks(stocks: list, client_id, seller_token):
 
     Аргументы:
         stocks (list): спискок с часами и id
-        client_id (API): ключ клиента от marketplace
-        seller_token (API): ключ продавца от marketplace
+        client_id (str): ключ клиента от marketplace
+        seller_token (str): ключ продавца от marketplace
 
     Возвращает:
-        Отаправляет json файл на сайт
+        объект в формате json()
+        объект имеет тип dict
+        содержит в себе ответ от сервиса ozon api
+        в ответе данные о том как прошло обновление товаров на маркетплейсе
     """
     url = "https://api-seller.ozon.ru/v1/product/import/stocks"
     headers = {
