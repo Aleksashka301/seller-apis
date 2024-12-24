@@ -66,16 +66,15 @@ def get_offer_ids(client_id, seller_token):
 
 
 def update_price(prices: list, client_id, seller_token):
-    """Обновляет ппрайс лист на маркетплейсе
+    """Обновляет ппрайслист на маркетплейсе
 
     Аргументы:
-        prices (list): спискок с часами и id
+        prices (list): список с часами и id
         client_id (str): ключ клиента от marketplace
         seller_token (str): ключ продавца от marketplace
 
     Возвращает:
-        объект в формате json()
-        объект имеет тип dict
+        объект типа dict
         содержит в себе ответ от сервиса ozon api
         в ответе данные о том как прошло обновление цен на маркетплейсе
     """
@@ -94,13 +93,12 @@ def update_stocks(stocks: list, client_id, seller_token):
     """Обновляет остатки товара на маркетплейсе
 
     Аргументы:
-        stocks (list): спискок с часами и id
+        stocks (list): список с часами и id
         client_id (str): ключ клиента от marketplace
         seller_token (str): ключ продавца от marketplace
 
     Возвращает:
-        объект в формате json()
-        объект имеет тип dict
+        объект типа dict
         содержит в себе ответ от сервиса ozon api
         в ответе данные о том как прошло обновление товаров на маркетплейсе
     """
@@ -181,7 +179,6 @@ def create_prices(watch_remnants, offer_ids):
     Возвращает:
         list: обновлённый прайслист по часам
     """
-
     prices = []
     for watch in watch_remnants:
         if str(watch.get("Код")) in offer_ids:
@@ -215,7 +212,7 @@ def divide(lst: list, n: int):
     """Делит список по количеству элементов
 
     Аргументы:
-        lst (list): список, который необходио разделить
+        lst (list): список, который необходимо разделить
         n (int): число, максимальное количество элементов в списке
 
     Возвращает:
