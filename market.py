@@ -48,9 +48,8 @@ def update_stocks(stocks, campaign_id, access_token):
         access_token (str): ключ api yandex marketplace
 
     Возвращает:
-        объект в формате json()
-        объект имеет тип dict и содержит ответ от yandex api
-        в ответе содержаться данные о том как прошёл запрос на обновление товаров
+        объект типа dict, который содержит ответ от yandex api
+        в ответе содержатся данные о том как прошёл запрос на обновление товаров
     """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
@@ -71,14 +70,13 @@ def update_price(prices, campaign_id, access_token):
     """Обновляет цены на маркетплейсе
 
     Аргументы:
-        prices (list): спискок с артикулами и ценами на товар
+        prices (list): список с артикулами и ценами на товар
         campaign_id (str): ключ для FBS продаж
         access_token (str): ключ для доступа в marketplace
 
     Возвращает:
-        объект в формате json()
-        объект имеет тип dict и содержит ответ от yandex api
-        в ответе содержаться данные о том как прошёл запрос на обновление цен товаров
+        объект типа dict, который содержит ответ от yandex api
+        в ответе содержатся данные о том как прошёл запрос на обновление цен товаров
     """
     endpoint_url = "https://api.partner.market.yandex.ru/"
     headers = {
@@ -96,7 +94,7 @@ def update_price(prices, campaign_id, access_token):
 
 
 def get_offer_ids(campaign_id, market_token):
-    """Создаёт спискок с артикулами товаров
+    """Создаёт список с артикулами товаров
 
     Аргументы:
         campaign_id (str): ключ компании для FBS продаж
@@ -120,11 +118,11 @@ def get_offer_ids(campaign_id, market_token):
 
 
 def create_stocks(watch_remnants, offer_ids, warehouse_id):
-    """Создаёт спискок с остатками товаров для отправки на yandex market
+    """Создаёт список с остатками товаров для отправки на yandex market
 
     Аргументы:
-        watch_remnants (list): спискок с часами и данными о них
-        offer_ids (list): спискок с артикулами товаров с yandex market
+        watch_remnants (list): список с часами и данными о них
+        offer_ids (list): список с артикулами товаров с yandex market
         warehouse_id (str): ключ для FBS продаж
 
     Возвращает:
@@ -178,11 +176,11 @@ def create_prices(watch_remnants, offer_ids):
     """Создаёт прайслист с часами
 
     Аргументы:
-        watch_remnants (list): спискок с данными о часах
-        offer_ids (list): спискок с артикулами
+        watch_remnants (list): список с данными о часах
+        offer_ids (list): список с артикулами
 
     Возвращает:
-        list: спискок с артикулами и ценами на товар
+        list: список с артикулами и ценами на товар
     """
     prices = []
     for watch in watch_remnants:
